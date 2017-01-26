@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 #region Additional Namespaces
 using Chinook.Data.Entities;
+using Chinook.Data.DTOs;
 using Chinook.Data.POCOs;
 using ChinookSystem.DAL;
 using System.ComponentModel;
@@ -16,7 +17,7 @@ namespace ChinookSystem.BLL
     [DataObject]
     public class AlbumController
     {
-        [DataObjectMethod(DataObjectMethodType.Select,false)]
+        [DataObjectMethod(DataObjectMethodType.Select, false)]
         public List<AlbumArtist> ListAlbumsbyArtist()
         {
             using (var context = new ChinookContext())
@@ -34,7 +35,7 @@ namespace ChinookSystem.BLL
             }
         }
 
-        [DataObjectMethod(DataObjectMethodType.Select,false)]
+        [DataObjectMethod(DataObjectMethodType.Select, false)]
         public List<Album> Albums_GetForArtistbyName(string name)
         {
             using (var context = new ChinookContext())
@@ -50,7 +51,30 @@ namespace ChinookSystem.BLL
                 //it is NOT C#
                 return results.ToList();
             }
-        }
+        }//eom (end of method)
 
-    }
-}
+        [DataObjectMethod(DataObjectMethodType.Select, false)]
+
+        public List<ArtistAlbumReleases> ArtistAlbumReleases_List()
+        {
+            using (var context = new ChinookContext())
+            {
+                var results = from x in context.Albums
+                              group x by x.Artist.Name into result
+                              select new ArtistAlbumReleases
+                              {
+                                  Artist = result.Key,
+                                  Albums = (from y in result
+                                           select new AlbumRelease
+                                           {
+                                               Title = y.Title,
+                                               RYear = y.ReleaseYear
+                                           }).ToList()
+                              };
+                return results.ToList();
+
+            }
+        }//eom
+
+    }//eoc
+}//eon
