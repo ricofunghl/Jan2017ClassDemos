@@ -15,7 +15,7 @@ namespace ChinookSystem.BLL
 {
     
     [DataObject]
-    class ArtistController
+    public class ArtistController
     {
         //dump all instances of the entity
         [DataObjectMethod(DataObjectMethodType.Select,false)]
