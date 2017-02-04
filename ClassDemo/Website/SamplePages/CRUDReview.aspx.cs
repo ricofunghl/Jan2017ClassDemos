@@ -69,22 +69,84 @@ public partial class SamplePages_CRUDReview : System.Web.UI.Page
 
     protected void AlbumList_SelectedIndexChanged(object sender, EventArgs e)
     {
-       
+        GridViewRow agvrow = AlbumList.Rows[AlbumList.SelectedIndex];
+        string albumId = (agvrow.FindControl("AlbumID") as Label).Text;
+        string albumTitle = (agvrow.FindControl("Title") as Label).Text;
+        string albumYear = (agvrow.FindControl("Year") as Label).Text;
+        string albumLabel = (agvrow.FindControl("AlbumLabel") as Label).Text;
+
+        string artistId = (agvrow.FindControl("ArtistID") as Label).Text;
+        
+        //displaying on tab Find
+        SelectedTitle.Text = albumTitle + " release in " + albumYear + " by " + albumLabel;
+
+        //filling controls on tab Maintain
+        AlbumID.Text = albumId;
+        AlbumTitle.Text = albumTitle;
+        ArtistList.SelectedValue = artistId;
+        AlbumReleaseYear.Text = albumYear;
+        AlbumReleaseLabel.Text = albumLabel;
 
     }
 
     protected void AddAlbum_Click(object sender, EventArgs e)
     {
-       
+       //retest the validation of the incoming data via the Validation Controls
+       if (IsValid)
+        {
+            //any other business rules
+            MessageUserControl2.TryRun(() => 
+            {
+                AlbumController sysmgr = new AlbumController();
+                Album newAlbum = new Album();
+                newAlbum.Title = AlbumTitle.Text;
+                newAlbum.ArtistId = int.Parse(ArtistList.SelectedValue);
+                newAlbum.ReleaseYear = int.Parse(AlbumReleaseYear.Text);
+                newAlbum.ReleaseLabel = string.IsNullOrEmpty(AlbumReleaseLabel.Text) ? null : AlbumReleaseLabel.Text;
+
+                sysmgr.ALbums_Add(newAlbum);
+            }, "Add Album","Album has been suscessfully added to the database.");
+        }
        
     }
     protected void UpdateAlbum_Click(object sender, EventArgs e)
     {
-       
+        if (IsValid)
+        {
+            //any other business rules
+            if (string.IsNullOrEmpty(AlbumID.Text))
+            {
+                MessageUserControl2.ShowInfo("Missing Data", "Missing Album Id. Use Find to locate the album you wish to maintain");
+            }
+            else
+            {
+                int albumid = 0;
+                if (int.TryParse(AlbumID.Text, out albumid))
+                {
+                    MessageUserControl2.TryRun(() =>
+                    {
+                        AlbumController sysmgr = new AlbumController();
+                        Album newAlbum = new Album();
+                        newAlbum.Title = AlbumTitle.Text;
+                        newAlbum.ArtistId = int.Parse(ArtistList.SelectedValue);
+                        newAlbum.ReleaseYear = int.Parse(AlbumReleaseYear.Text);
+                        newAlbum.ReleaseLabel = string.IsNullOrEmpty(AlbumReleaseLabel.Text) ? null : AlbumReleaseLabel.Text;
+
+                        sysmgr.ALbums_Add(newAlbum);
+                    }, "Update Album", "Album has been suscessfully updated to the database.");
+                }
+                else
+                {
+                    MessageUserControl2.ShowInfo("Invalid Data", "Albumd Id. Use Find to locate the album you wish to maintain");
+                }
+               
+            }
+        }
+
     }
     protected void DeleteAlbum_Click(object sender, EventArgs e)
     {
-       
+        //todo
     }
     protected void Clear_Click(object sender, EventArgs e)
     {

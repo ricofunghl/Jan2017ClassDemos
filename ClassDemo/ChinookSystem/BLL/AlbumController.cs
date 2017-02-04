@@ -88,6 +88,89 @@ namespace ChinookSystem.BLL
                 return results.ToList();
             }
         }
+
+        [DataObjectMethod(DataObjectMethodType.Select, false)]
+        public List<Album> Albums_List()
+        {
+            using (var context = new ChinookContext())
+            {
+                return context.Albums.ToList();
+            }
+        }
+
+        [DataObjectMethod(DataObjectMethodType.Select, false)]
+
+        public Album Album_Get(int albumid)
+        {
+            using (var context = new ChinookContext())
+            {
+                return context.Albums.Find(albumid);
+            }
+        }
+
+        [DataObjectMethod(DataObjectMethodType.Insert, false)]
+        public void ALbums_Add(Album item)
+        {
+            using (var context = new ChinookContext())
+            {
+                //any business rules
+                context.Albums.Add(item);
+                context.SaveChanges();
+
+            }
+        }
+
+        public void Albums_Update(Album item)
+        {
+            using (var context = new ChinookContext())
+            {
+                //any business rules
+
+                //any data refinements
+                //review of using iif
+                //composer can be a null string
+                //we do not wish to store an empty string
+                context.Albums.Attach(item);
+                item.ReleaseLabel = string.IsNullOrEmpty(item.ReleaseLabel) ? null : item.ReleaseLabel;
+
+                //update the existing instance of track info on the database
+                context.Entry(item).State = System.Data.Entity.EntityState.Modified;
+
+                //update command if updating selected fields
+                //context.Entry(instancevariablename).Property(y => y.columnname).IsModified = true;
+
+                context.SaveChanges();
+            }
+        }
+
+        //the delete is an overload method technique
+
+        [DataObjectMethod(DataObjectMethodType.Delete, false)]
+        public void ALbums_Delete(Album item)
+        {
+            Albums_Delete(item.AlbumId);
+        }
+
+        public void Albums_Delete(int albumid)
+        {
+            using (var context = new ChinookContext())
+            {
+                //any business rules
+
+                //do the delete
+                //find the existing record on the database
+                var existing = context.Albums.Find(albumid);
+
+                if (existing == null)
+                {
+                    throw new Exception("Album does not exist on database");
+                }
+                //delete the record from the database
+                context.Albums.Remove(existing);
+                //commit the transaction
+                context.SaveChanges();
+            }
+        }
         #endregion
 
     }//eoc
