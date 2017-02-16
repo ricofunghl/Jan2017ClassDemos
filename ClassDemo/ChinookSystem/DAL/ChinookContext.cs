@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 #region Additional Namespaces
 using System.Data.Entity;
 using Chinook.Data.Entities;
+using Chinook.Data.Enitities;
 #endregion
 
 namespace ChinookSystem.DAL
