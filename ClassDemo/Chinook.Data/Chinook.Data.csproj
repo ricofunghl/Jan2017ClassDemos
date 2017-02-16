@@ -48,7 +48,9 @@
     <Compile Include="DTOs\ArtistAlbumReleases.cs" />
     <Compile Include="Entities\Employee.cs" />
     <Compile Include="Entities\Security\ApplicationUser.cs" />
+    <Compile Include="Entities\Security\RoleProfile.cs" />
     <Compile Include="Entities\Security\SecurityRoles.cs" />
+    <Compile Include="Entities\Security\UserProfile.cs" />
     <Compile Include="POCOs\AlbumRelease.cs" />
     <Compile Include="Entities\Album.cs" />
     <Compile Include="Entities\Artist.cs" />
