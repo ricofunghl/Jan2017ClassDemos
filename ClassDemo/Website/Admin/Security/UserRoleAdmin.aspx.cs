@@ -10,7 +10,6 @@ using ChinookSystem.BLL;
 using ChinookSystem.BLL.Security;
 using Chinook.Data.Enitities;
 using Chinook.Data.Enitities.Security;
-using Chinook.Data.Entities.Security;
 #endregion
 
 public partial class Admin_Security_UserRoleAdmin : System.Web.UI.Page

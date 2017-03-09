@@ -1,11 +1,15 @@
-﻿using Chinook.Data.Entities.Security;
-using ChinookSystem.BLL.Security;
+﻿
+
 using Microsoft.AspNet.Identity;
 using System;
 using System.Linq;
 using System.Web.UI;
 using Website;
 
+#region Additional Namespaces
+using ChinookSystem.BLL.Security;
+using Chinook.Data.Enitities.Security;
+#endregion
 public partial class Account_Register : Page
 {
     protected void CreateUser_Click(object sender, EventArgs e)

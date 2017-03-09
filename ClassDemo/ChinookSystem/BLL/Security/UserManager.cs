@@ -7,13 +7,12 @@ using System.Threading.Tasks;
 
 #region Additional Namespaces
 using Microsoft.AspNet.Identity;
+using Chinook.Data.Enitities.Security;
 using Microsoft.AspNet.Identity.EntityFramework;
 using ChinookSystem.DAL.Security;
-using Chinook.Data.Entities.Security;
 using ChinookSystem.DAL;
 using Chinook.Data.POCOs;
 using System.ComponentModel;
-using Chinook.Data.Enitities.Security;
 using Chinook.Data.Enitities;
 #endregion
 
@@ -26,9 +25,9 @@ namespace ChinookSystem.BLL.Security
         #region Constants
         private const string STR_DEFAULT_PASSWORD = "Pa$$word1";
         /// <summary>Requires FirstName and LastName</summary>
-        private const string STR_USERNAME_FORMAT = "{0}.{1}";
+        private const string STR_USERNAME_FORMAT = "{0}{1}";
         /// <summary>Requires UserName</summary>
-        private const string STR_EMAIL_FORMAT = "{0}@chinook.ca";
+        private const string STR_EMAIL_FORMAT = "{0}@Chinook.ca";
         private const string STR_WEBMASTER_USERNAME = "Webmaster";
         #endregion
 
@@ -39,13 +38,13 @@ namespace ChinookSystem.BLL.Security
 
         public void AddWebMaster()
         {
-            //Users accesses all the records on the AspNetUsers Table
-            //UserName is the user logon user id e.g. dwelch
+            //Users accesses all the records on the AspNetUsers table
+            //UserName is the user logon user id (dwelch)
             if (!Users.Any(u => u.UserName.Equals(STR_WEBMASTER_USERNAME)))
             {
                 //create a new instance that will be used as the data to
-                //add a new record to the AspNetUsers table
-                //dynamically fill two attribute of the instance
+                //   add a new record to the AspNetUsers table
+                //dynamically fill two attributes of the instance
                 var webmasterAccount = new ApplicationUser()
                 {
                     UserName = STR_WEBMASTER_USERNAME,
@@ -57,7 +56,7 @@ namespace ChinookSystem.BLL.Security
 
                 //place an account role record on the AspNetUserRoles table
                 //.Id comes from the webmasterAccount and is the pkey of the Users table
-                //role will come from the Entities.Security.SecurityRoles
+                //role will comes from the Entities.Security.SecurityRoles
                 this.AddToRole(webmasterAccount.Id, SecurityRoles.WebsiteAdmins);
             }
         }
@@ -68,7 +67,7 @@ namespace ChinookSystem.BLL.Security
             {
                 //get all current employees
                 //linq query will not execute as yet
-                //return datatype will be IQueryable
+                //return datatype will be IQueryable<EmployeeListPOCO>
                 var currentEmployees = from x in context.Employees
                                        select new EmployeeListPOCO
                                        {
@@ -78,30 +77,32 @@ namespace ChinookSystem.BLL.Security
                                        };
 
                 //get all employees who have an user account
-                //Users needs to be in memory therefore use .ToList()
+                //Users needs to be in memory therfore use .ToList()
                 //POCO EmployeeID is an int
                 //the Users Employee id is an int?
                 //since we will only be retrieving
-                //Users that are employees (ID is not null)
-                //we need to convert the nullable int into a require int
+                //  Users that are employees (ID is not null)
+                //  we need to convert the nullable int into
+                //  a require int
                 //the results of this query will be in memory
-                var userEmployees = from x in Users.ToList()
+                var UserEmployees = from x in Users.ToList()
                                     where x.EmployeeID.HasValue
                                     select new RegisteredEmployeePOCO
                                     {
                                         UserName = x.UserName,
                                         EmployeeId = int.Parse(x.EmployeeID.ToString())
                                     };
-                //loop the see if auto generation of new employee
+                //loop to see if auto generation of new employee
                 //Users record is needed
-                //the foreach causes the delayed execution of the linq above
-                foreach (var employee in currentEmployees)
+                //the foreach cause the delayed execution of the
+                //linq above
+                foreach(var employee in currentEmployees)
                 {
-                    //does the employee NOT have a logon (no Users record)
-                    if (!userEmployees.Any(us => us.EmployeeId == employee.EmployeeId))
+                    //does the employee NOT have a logon (no User record)
+                    if(!UserEmployees.Any(us => us.EmployeeId == employee.EmployeeId))
                     {
                         //create a suggested employee UserName
-                        //firstname initial + lastname: dwelch
+                        //firstname initial + LastName: dwelch
                         var newUserName = employee.FirstName.Substring(0, 1) + employee.LastName;
 
                         //create a new User ApplicationUser instance
@@ -110,17 +111,15 @@ namespace ChinookSystem.BLL.Security
                             UserName = newUserName,
                             Email = string.Format(STR_EMAIL_FORMAT, newUserName),
                             EmailConfirmed = true
-
                         };
                         userAccount.EmployeeID = employee.EmployeeId;
-                        //create the User record
+                        //create the Users record
                         IdentityResult result = this.Create(userAccount, STR_DEFAULT_PASSWORD);
 
                         //result hold the return value of the creation attempt
                         //if true, account was created,
                         //if false, an account already exists with that username
-
-                        if (!result.Succeeded)
+                        if(!result.Succeeded)
                         {
                             //name already in use
                             //get a UserName that is not in use
@@ -129,44 +128,43 @@ namespace ChinookSystem.BLL.Security
                             this.Create(userAccount, STR_DEFAULT_PASSWORD);
                         }
 
-                        //creat the staff role in UserRoles
+                        //create the staff role in UserRoles
                         this.AddToRole(userAccount.Id, SecurityRoles.Staff);
                     }
                 }
-
             }
         }
 
-        public string VerifyNewUserName(string suggestUserName)
+        public string VerifyNewUserName(string suggestedUserName)
         {
-            //get a list of all current usersnames (customers and employees)
-            // that start with the suggestUserName
+            //get a list of all current usernames (customers and employees)
+            //  that start with the suggestusername
             //list of strings
             //will be in memory
             var allUserNames = from x in Users.ToList()
-                               where x.UserName.StartsWith(suggestUserName)
+                               where x.UserName.StartsWith(suggestedUserName)
                                orderby x.UserName
                                select x.UserName;
             //set up the verified unique UserName
-            var verifiedUserName = suggestUserName;
+            var verifiedUserName = suggestedUserName;
 
-            //the following for loop will continue to loop until
-            //an unused UserName has been genereated
-            //the condition searches all current UserNames for the 
-            //currently generated verified user name (inside loop code)
+            //the following for() loop will continue to loop until
+            // an unsed UserName has been generated
+            //the condition searches all current UserNames for the
+            //currently generated verified used name (inside loop code)
             //if found the loop will generate a new verified name
-            //based on the original suggested username and the counter
+            //   based on the original suggest username and the counter
             //This loop continues until an unused username is found
-            //OrdinalIgnoreCase: case does not matter
-            for (int i = 1; allUserNames.Any(x => x.Equals(verifiedUserName, StringComparison.OrdinalIgnoreCase)); i++)
+            //OrdinalIgnoreCase : case does not matter
+            for(int i = 1; allUserNames.Any(x => x.Equals(verifiedUserName,
+                        StringComparison.OrdinalIgnoreCase)); i++)
             {
-                verifiedUserName = suggestUserName + i.ToString();
+                verifiedUserName = suggestedUserName + i.ToString();
             }
 
-            //return the finalized new verified user name
+            //return teh finalized new verified user name
             return verifiedUserName;
         }
-
         #region UserRole Adminstration
         [DataObjectMethod(DataObjectMethodType.Select, false)]
         public List<UserProfile> ListAllUsers()
@@ -263,4 +261,5 @@ namespace ChinookSystem.BLL.Security
         #endregion
 
     }
+
 }

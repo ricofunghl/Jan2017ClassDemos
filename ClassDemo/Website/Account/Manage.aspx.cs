@@ -1,9 +1,14 @@
-﻿using ChinookSystem.BLL.Security;
+﻿
 using Microsoft.AspNet.Identity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using Website;
+
+#region Additional Nmaespaces
+
+using ChinookSystem.BLL.Security;
+#endregion
 
 public partial class Account_Manage : System.Web.UI.Page
 {

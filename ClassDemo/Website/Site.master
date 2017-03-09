@@ -53,10 +53,9 @@
                         <li><a runat="server" href="~/">Home</a></li>
                         <li><a runat="server" href="~/About">About</a></li>
                         <li><a runat="server" href="~/Contact">Contact</a></li>
-                        <li><a runat="server" href="~/SamplePages/NavigationPropertySample">Nav Query</a></li>
+                        <li><a runat="server" href="~/SamplePages/NavigationPropertySample">NavQuery</a></li>
                         <li><a runat="server" href="~/SamplePages/SimpleParameterQuery">Parameter Query</a></li>
                     </ul>--%>
-
                     <asp:LoginView runat="server" ViewStateMode="Disabled">
                         <AnonymousTemplate>
                             <ul class="nav navbar-nav navbar-right">
@@ -79,30 +78,43 @@
                     <asp:Menu ID="navMenu" runat="server"
                         BackColor="#000000" BorderColor="Red"
                         StaticMenuItemStyle-ForeColor="#999999"
-                        StaticMenuItemStyle-VerticalPadding="10px"
-                        StaticMenuItemStyle-HorizontalPadding="10px"
-                        RenderingMode="List"
-                        Orientation="Horizontal"
-                        DynamicMenuItemStyle-ForeColor="#999999"
-                        DynamicMenuStyle-BackColor="Black">
+                         StaticMenuItemStyle-VerticalPadding="10px"
+                         StaticMenuItemStyle-HorizontalPadding="10px"
+                         RenderingMode="List" Orientation="Horizontal"
+                         DynamicMenuItemStyle-ForeColor="#999999"
+                         DynamicMenuStyle-BackColor="Black">
                         <Items>
                             <asp:MenuItem Text="Home" NavigateUrl="~/"></asp:MenuItem>
-                            <asp:MenuItem Text="Queries" Value="Queries">
-                                <asp:MenuItem Text="Nav Query" NavigateUrl="~/SamplePages/NavigationPropertySample.aspx"></asp:MenuItem>
-                                <asp:MenuItem Text="Parameter Query" NavigateUrl="~/SamplePages/SimpleParameterQuery.aspx"></asp:MenuItem>
-                                <asp:MenuItem Text="Nested Repeaters" NavigateUrl="~/SamplePages/RepeaterNestedRepeater.aspx"></asp:MenuItem>
-                                <asp:MenuItem Text="BootStrap Tabs" NavigateUrl="~/SamplePages/BootStrapTabs.aspx"></asp:MenuItem>
-                                <asp:MenuItem Text="CRUD Reivew" NavigateUrl="~/SamplePages/CRUDReview.aspx"></asp:MenuItem>
 
+                            <asp:MenuItem Text="Queries" Value="Queries">
+                                <asp:MenuItem Text="Nav Query" 
+                                    NavigateUrl="~/SamplePages/NavigationPropertySample.aspx"></asp:MenuItem>
+                                <asp:MenuItem Text="Parameter Query"
+                                     NavigateUrl="~/SamplePages/SimpleParameterQuery.aspx">
+                                </asp:MenuItem>
+                                 <asp:MenuItem Text="Nested Repeaters"
+                                     NavigateUrl="~/SamplePages/RepeaterNestedRepeater.aspx">
+                                </asp:MenuItem>
+                                <asp:MenuItem Text="BootStrap Tabs"
+                                     NavigateUrl="~/SamplePages/BootStrapTabs.aspx">
+                                </asp:MenuItem>
                             </asp:MenuItem>
+                            <asp:MenuItem Text="Maintenance" Value="Maintenance">
+                               <asp:MenuItem Text="CRUD Review"
+                                     NavigateUrl="~/SamplePages/CRUDReview.aspx">
+                                </asp:MenuItem>
+                                <asp:MenuItem Text="Security Admin"
+                                     NavigateUrl="~/Admin/Security/UserRoleAdmin.aspx">
+                                </asp:MenuItem>
+                                 <asp:MenuItem Text="Manage PlayList"
+                                     NavigateUrl="~/SamplePages/ManagePlayList.aspx">
+                                </asp:MenuItem>
+                            </asp:MenuItem>
+
                             <asp:MenuItem Text="About" NavigateUrl="~/About.aspx"></asp:MenuItem>
                             <asp:MenuItem Text="Contact" NavigateUrl="~/Contact.aspx"></asp:MenuItem>
                         </Items>
                     </asp:Menu>
-
-
-
-
 
                 </div>
             </div>

@@ -2,10 +2,6 @@
 
 <%@ Register Src="~/UserControls/MessageUserControl.ascx" TagPrefix="uc1" TagName="MessageUserControl" %>
 
-
-
-
-
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" Runat="Server">
      <h1>CRUD in Tabs</h1>
        <!--Common Update panel for user message control -->
@@ -14,12 +10,12 @@
                 <uc1:MessageUserControl runat="server" ID="MessageUserControl" />
             </ContentTemplate>
         </asp:UpdatePanel>
+
         <div class="row">
         <div class="col-md-12">
           <!--script for tab to tab movement -->
             <script>
-                function nextButton(anchorRef)
-                {
+                function nextButton(anchorRef) {
                     $('a[href="' + anchorRef + '"]').tab('show');
                 }
             </script>
@@ -38,11 +34,11 @@
                     <asp:UpdatePanel ID="UpdatePanel1" runat="server">
                         <ContentTemplate>
                              <!--  user message control for this panel -->
-                            <uc1:MessageUserControl runat="server" ID="MessageUserControl1" />
+                                <uc1:MessageUserControl runat="server" ID="MessageUserControl1" />
                                 <asp:Label ID="Label1" runat="server" Text="Album Title:"></asp:Label>&nbsp;&nbsp;
                                 <asp:TextBox ID="SearchArg" runat="server"></asp:TextBox>&nbsp;&nbsp;
 
-                                <!-- Search buttons do not want Validation(on tap 2) to happen on the web page-->
+                                <!-- Search buttons do not want Validation(on tap 2) to happen on the web page -->
                                 <asp:Button  ID="Search" runat="server" OnClick="Search_Click" Text="Search" CausesValidation="False"></asp:Button>
                             <br /><br />
                                 <asp:GridView ID="AlbumList" runat="server" AutoGenerateColumns="False" 
@@ -80,7 +76,7 @@
                                 <asp:Label ID="Label2" runat="server" Text="Selected"></asp:Label>
 
                             <!--added attribute to button to call js script for tab to tab movement-->
-                                <button type="button"  class="btn" onclick="nextButton('#maintain')">Next</button><br />
+                                <button type="button" class="btn" onclick="nextButton('#maintain')" >Next</button><br />
 
                                 <asp:Label ID="SelectedTitle" runat="server" ></asp:Label>
 
@@ -154,61 +150,60 @@
                  <div class="tab-pane fade" id="lvmaintain">
                       <asp:UpdatePanel ID="UpdatePanel3" runat="server">
                         <ContentTemplate>
-                            <uc1:MessageUserControl runat="server" ID="MessageUserControl3" />
-                           <p>Do wired CRUD using ListView</p>
                             <asp:ListView ID="AlbumCRUD" runat="server" 
                                 DataSourceID="AlbumCRUDODS" 
                                 InsertItemPosition="LastItem"
-                                DataKeyNames="AlbumId"
-                                ItemType="Chinook.Data.Entities.Album">
+                                 DataKeyNames="AlbumId"
+                                 ItemType="Chinook.Data.Enitities.Album">
                                 <AlternatingItemTemplate>
                                     <tr style="background-color: #FFFFFF; color: #284775;">
                                         <td>
                                             <asp:Button runat="server" CommandName="Delete" Text="Delete" ID="DeleteButton" CausesValidation="false" />
-                                            <asp:Button runat="server" CommandName="Edit" Text="Edit" ID="EditButton" CausesValidation="false" />
+                                            <asp:Button runat="server" CommandName="Edit" Text="Edit" ID="EditButton" CausesValidation="false"/>
                                         </td>
                                         <td>
-                                            <asp:Label Text='<%# Eval("AlbumId") %>' runat="server" ID="AlbumIdLabel" Width="50"/></td>
+                                            <asp:Label Text='<%# Eval("AlbumId") %>' runat="server" ID="AlbumIdLabel"  Width="50"/></td>
                                         <td>
                                             <asp:Label Text='<%# Eval("Title") %>' runat="server" ID="TitleLabel" /></td>
                                         <td>
-                                           <%-- <asp:Label Text='<%# Eval("ArtistId") %>' runat="server" ID="ArtistIdLabel" />--%>
-                                            <asp:DropDownList ID="ArtisListDDL" runat="server" 
+                                            
+                                            <asp:DropDownList ID="ArtistListLV" runat="server" 
                                                 DataSourceID="ArtistListODS" 
                                                 DataTextField="Name" 
                                                 DataValueField="ArtistId"
-                                                selectedValue='<%# Eval("ArtistId") %>'
-                                                ></asp:DropDownList></td>
+                                                selectedvalue='<%# Eval("ArtistId") %>'
+                                                 Width="250">
+                                            </asp:DropDownList></td>
                                         <td>
-                                            
-                                            <asp:Label Text='<%# Eval("ReleaseYear") %>' runat="server" ID="ReleaseYearLabel" Width="50"/></td>
+                                            <asp:Label Text='<%# Eval("ReleaseYear") %>' runat="server" ID="ReleaseYearLabel"  Width="50" /></td>
                                         <td>
                                             <asp:Label Text='<%# Eval("ReleaseLabel") %>' runat="server" ID="ReleaseLabelLabel" /></td>
-                                
+                                       
                                     </tr>
                                 </AlternatingItemTemplate>
                                 <EditItemTemplate>
                                     <tr style="background-color: #999999;">
                                         <td>
-                                            <asp:Button runat="server" CommandName="Update" Text="Update" ID="UpdateButton" CausesValidation="false" />
-                                            <asp:Button runat="server" CommandName="Cancel" Text="Cancel" ID="CancelButton" CausesValidation="false" />
+                                            <asp:Button runat="server" CommandName="Update" Text="Update" ID="UpdateButton" CausesValidation="false"/>
+                                            <asp:Button runat="server" CommandName="Cancel" Text="Cancel" ID="CancelButton" CausesValidation="false"/>
                                         </td>
                                         <td>
-                                            <asp:TextBox Text='<%# Bind("AlbumId") %>' runat="server" ID="AlbumIdTextBox" Width="50" /></td>
+                                            <asp:TextBox Text='<%# Bind("AlbumId") %>' runat="server" ID="AlbumIdTextBox"  Width="50" /></td>
                                         <td>
                                             <asp:TextBox Text='<%# Bind("Title") %>' runat="server" ID="TitleTextBox" /></td>
                                         <td>
-                                                            <asp:DropDownList ID="ArtisListDDL" runat="server" 
+                                                <asp:DropDownList ID="ArtistListLV" runat="server" 
                                                 DataSourceID="ArtistListODS" 
                                                 DataTextField="Name" 
                                                 DataValueField="ArtistId"
-                                                selectedValue='<%# Bind("ArtistId") %>'
-                                                ></asp:DropDownList></td>
+                                                selectedvalue='<%# Bind("ArtistId") %>'
+                                                     Width="250">
+                                            </asp:DropDownList></td>
                                         <td>
-                                            <asp:TextBox Text='<%# Bind("ReleaseYear") %>' runat="server" ID="ReleaseYearTextBox" Width="50" /></td>
+                                            <asp:TextBox Text='<%# Bind("ReleaseYear") %>' runat="server" ID="ReleaseYearTextBox"  Width="50" /></td>
                                         <td>
                                             <asp:TextBox Text='<%# Bind("ReleaseLabel") %>' runat="server" ID="ReleaseLabelTextBox" /></td>
-                    
+                                        
                                     </tr>
                                 </EditItemTemplate>
                                 <EmptyDataTemplate>
@@ -221,50 +216,51 @@
                                 <InsertItemTemplate>
                                     <tr style="">
                                         <td>
-                                            <asp:Button runat="server" CommandName="Insert" Text="Insert" ID="InsertButton" CausesValidation="false" />
-                                            <asp:Button runat="server" CommandName="Cancel" Text="Clear" ID="CancelButton" CausesValidation="false" />
+                                            <asp:Button runat="server" CommandName="Insert" Text="Insert" ID="InsertButton" CausesValidation="false"/>
+                                            <asp:Button runat="server" CommandName="Cancel" Text="Clear" ID="CancelButton" CausesValidation="false"/>
                                         </td>
                                         <td>
-                                            <asp:TextBox Text='<%# Bind("AlbumId") %>' runat="server" ID="AlbumIdTextBox" Width="50" /></td>
+                                            <asp:TextBox Text='<%# Bind("AlbumId") %>' runat="server" ID="AlbumIdTextBox"  Width="50" /></td>
                                         <td>
                                             <asp:TextBox Text='<%# Bind("Title") %>' runat="server" ID="TitleTextBox" /></td>
                                         <td>
-                                            <%-- EVAL only supports READ no WRITE, in InsertTemplate we need to change it to BIND--%>
-                                                            <asp:DropDownList ID="ArtisListDDL" runat="server" 
+                                                <asp:DropDownList ID="ArtistListLV" runat="server" 
                                                 DataSourceID="ArtistListODS" 
                                                 DataTextField="Name" 
                                                 DataValueField="ArtistId"
-                                                selectedValue='<%# Bind("ArtistId") %>' 
-                                                ></asp:DropDownList></td>
+                                                selectedvalue='<%# Bind("ArtistId") %>'
+                                                     Width="250">
+                                            </asp:DropDownList></td>
                                         <td>
-                                            <asp:TextBox Text='<%# Bind("ReleaseYear") %>' runat="server" ID="ReleaseYearTextBox" Width="50" /></td>
+                                            <asp:TextBox Text='<%# Bind("ReleaseYear") %>' runat="server" ID="ReleaseYearTextBox"  Width="50" /></td>
                                         <td>
                                             <asp:TextBox Text='<%# Bind("ReleaseLabel") %>' runat="server" ID="ReleaseLabelTextBox" /></td>
-                            
+                                       
                                     </tr>
                                 </InsertItemTemplate>
                                 <ItemTemplate>
                                     <tr style="background-color: #E0FFFF; color: #333333;">
                                         <td>
-                                            <asp:Button runat="server" CommandName="Delete" Text="Delete" ID="DeleteButton" CausesValidation="false" />
-                                            <asp:Button runat="server" CommandName="Edit" Text="Edit" ID="EditButton" CausesValidation="false" />
+                                            <asp:Button runat="server" CommandName="Delete" Text="Delete" ID="DeleteButton" CausesValidation="false"/>
+                                            <asp:Button runat="server" CommandName="Edit" Text="Edit" ID="EditButton" CausesValidation="false"/>
                                         </td>
                                         <td>
-                                            <asp:Label Text='<%# Eval("AlbumId") %>' runat="server" ID="AlbumIdLabel" Width="50" /></td>
+                                            <asp:Label Text='<%# Eval("AlbumId") %>' runat="server" ID="AlbumIdLabel"  Width="50" /></td>
                                         <td>
                                             <asp:Label Text='<%# Eval("Title") %>' runat="server" ID="TitleLabel" /></td>
                                         <td>
-                                                            <asp:DropDownList ID="ArtisListDDL" runat="server" 
+                                                <asp:DropDownList ID="ArtistListLV" runat="server" 
                                                 DataSourceID="ArtistListODS" 
                                                 DataTextField="Name" 
                                                 DataValueField="ArtistId"
-                                                selectedValue='<%# Eval("ArtistId") %>'
-                                                ></asp:DropDownList></td>
+                                                selectedvalue='<%# Eval("ArtistId") %>'
+                                                     Width="250">
+                                            </asp:DropDownList></td>
                                         <td>
-                                            <asp:Label Text='<%# Eval("ReleaseYear") %>' runat="server" ID="ReleaseYearLabel" Width="50" /></td>
+                                            <asp:Label Text='<%# Eval("ReleaseYear") %>' runat="server" ID="ReleaseYearLabel"  Width="50" /></td>
                                         <td>
                                             <asp:Label Text='<%# Eval("ReleaseLabel") %>' runat="server" ID="ReleaseLabelLabel" /></td>
-                            
+                                       
                                     </tr>
                                 </ItemTemplate>
                                 <LayoutTemplate>
@@ -279,7 +275,7 @@
                                                         <th runat="server">Artist</th>
                                                         <th runat="server">Year</th>
                                                         <th runat="server">Label</th>
-                                                        
+                                                       
                                                     </tr>
                                                     <tr runat="server" id="itemPlaceholder"></tr>
                                                 </table>
@@ -289,7 +285,9 @@
                                             <td runat="server" style="text-align: center; background-color: #5D7B9D; font-family: Verdana, Arial, Helvetica, sans-serif; color: #FFFFFF">
                                                 <asp:DataPager runat="server" ID="DataPager1">
                                                     <Fields>
-                                                        <asp:NextPreviousPagerField ButtonType="Button" ShowFirstPageButton="True" ShowLastPageButton="True"></asp:NextPreviousPagerField>
+                                                        <asp:NextPreviousPagerField ButtonType="Button" ShowFirstPageButton="True" ShowNextPageButton="False" ShowPreviousPageButton="False"></asp:NextPreviousPagerField>
+                                                        <asp:NumericPagerField></asp:NumericPagerField>
+                                                        <asp:NextPreviousPagerField ButtonType="Button" ShowLastPageButton="True" ShowNextPageButton="False" ShowPreviousPageButton="False"></asp:NextPreviousPagerField>
                                                     </Fields>
                                                 </asp:DataPager>
                                             </td>
@@ -299,52 +297,53 @@
                                 <SelectedItemTemplate>
                                     <tr style="background-color: #E2DED6; font-weight: bold; color: #333333;">
                                         <td>
-                                            <asp:Button runat="server" CommandName="Delete" Text="Delete" ID="DeleteButton" CausesValidation="false" />
-                                            <asp:Button runat="server" CommandName="Edit" Text="Edit" ID="EditButton" CausesValidation="false" />
+                                            <asp:Button runat="server" CommandName="Delete" Text="Delete" ID="DeleteButton" CausesValidation="false"/>
+                                            <asp:Button runat="server" CommandName="Edit" Text="Edit" ID="EditButton" CausesValidation="false"/>
                                         </td>
                                         <td>
-                                            <asp:Label Text='<%# Eval("AlbumId") %>' runat="server" ID="AlbumIdLabel" Width="50" /></td>
+                                            <asp:Label Text='<%# Eval("AlbumId") %>' runat="server" ID="AlbumIdLabel"  Width="50"/></td>
                                         <td>
                                             <asp:Label Text='<%# Eval("Title") %>' runat="server" ID="TitleLabel" /></td>
                                         <td>
-                                                            <asp:DropDownList ID="ArtisListDDL" runat="server" 
+                                                <asp:DropDownList ID="ArtistListLV" runat="server" 
                                                 DataSourceID="ArtistListODS" 
                                                 DataTextField="Name" 
                                                 DataValueField="ArtistId"
-                                                selectedValue='<%# Eval("ArtistId") %>'
-                                                ></asp:DropDownList></td>
+                                                selectedvalue='<%# Eval("ArtistId") %>'
+                                                     Width="250">
+                                            </asp:DropDownList></td>
                                         <td>
-                                            <asp:Label Text='<%# Eval("ReleaseYear") %>' runat="server" ID="ReleaseYearLabel" Width="50" /></td>
+                                            <asp:Label Text='<%# Eval("ReleaseYear") %>' runat="server" ID="ReleaseYearLabel"  Width="50"/></td>
                                         <td>
                                             <asp:Label Text='<%# Eval("ReleaseLabel") %>' runat="server" ID="ReleaseLabelLabel" /></td>
-                             
+                                     
                                     </tr>
                                 </SelectedItemTemplate>
                             </asp:ListView>
-                            <asp:ObjectDataSource ID="AlbumCRUDODS" runat="server" DataObjectTypeName="Chinook.Data.Entities.Album" 
-                                DeleteMethod="ALbums_Delete" 
-                                InsertMethod="ALbums_Add"  
-                                SelectMethod="Albums_List" 
+                            <asp:ObjectDataSource ID="AlbumCRUDODS" runat="server"
+                                 DataObjectTypeName="Chinook.Data.Enitities.Album" 
+                                DeleteMethod="Albums_Delete" 
+                                InsertMethod="Albums_Add"
+                                SelectMethod="Albums_List"  
                                 UpdateMethod="Albums_Update"
-                                OldValuesParameterFormatString="original_{0}"
+                                OldValuesParameterFormatString="original_{0}" 
                                 TypeName="ChinookSystem.BLL.AlbumController" 
-                                OnSelected="CheckForException"
-                                OnDeleted="CheckForException"
-                                OnInserted="CheckForException"
-                                OnUpdated="CheckForException"
-                                >
-                                
+                                 OnSelected="CheckForException"
+                                 OnDeleted="CheckForException"
+                                 OnInserted="CheckForException"
+                                 OnUpdated="CheckForException"
+                               >
                             </asp:ObjectDataSource>
-                             <%-- The following ODS already exists in tab2 therefore I do not need to recreate for this tab.
-                                 IF the tab was on a page by itself, then I would need to create the ArtistListODS 
-                                 <asp:ObjectDataSource ID="ArtistListODS" runat="server" 
-                                    OldValuesParameterFormatString="original_{0}" 
-                                    SelectMethod="Artist_ListAll" 
-                                    TypeName="ChinookSystem.BLL.ArtistController">
-                                  </asp:ObjectDataSource>
-                                --%>
-                            
-
+                            <%-- 
+                                this ODS already exists in tab2 therefore I do not need
+                                to recreate for this tab.
+                                IF the tab was on a page by itself, then I would need
+                                to create the ArtistListODS
+                                <asp:ObjectDataSource ID="ArtistListODS" runat="server" 
+                                OldValuesParameterFormatString="original_{0}" 
+                                SelectMethod="Artist_ListAll" 
+                                TypeName="ChinookSystem.BLL.ArtistController">
+                            </asp:ObjectDataSource>--%>
                         </ContentTemplate>
                     </asp:UpdatePanel>   
                 </div>

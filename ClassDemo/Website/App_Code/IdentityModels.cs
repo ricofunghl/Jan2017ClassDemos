@@ -6,23 +6,20 @@ using System;
 using Website;
 
 
+
 #region Additional Namespaces
 using ChinookSystem.BLL.Security;
-using Chinook.Data.Entities.Security;
-
+using Chinook.Data.Enitities.Security;
 #endregion
 
 namespace Website
 {
+  
 
 
 
-
-    
-}
-
-namespace Website
-{
+    #region Helpers
+   
     public static class IdentityHelper
     {
         // Used for XSRF when linking external logins
@@ -64,5 +61,5 @@ namespace Website
             }
         }
     }
-   
+    #endregion
 }

@@ -11,10 +11,10 @@
         RouteConfig.RegisterRoutes(RouteTable.Routes);
         BundleConfig.RegisterBundles(BundleTable.Bundles);
 
-        //Create the startup default roles
+        //Create the startup default roles 
         //Create the webmaster user
         //Create the employee user accounts
-        //When the application starts up
+        //when the application starts up
 
         var rolemgr = new RoleManager();
         rolemgr.AddDefaultRoles();
@@ -22,6 +22,7 @@
         var usermgr = new UserManager();
         usermgr.AddWebMaster();
         usermgr.AddEmployees();
+
     }
 
 </script>

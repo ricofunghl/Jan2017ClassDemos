@@ -9,21 +9,19 @@ using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using ChinookSystem.DAL.Security;
-using Chinook.Data.Entities.Security;
-using System.ComponentModel;
 using Chinook.Data.Enitities.Security;
+using System.ComponentModel;
 #endregion
 
 namespace ChinookSystem.BLL.Security
 {
-    [DataObject]
+   [DataObject]
     public class RoleManager : RoleManager<IdentityRole>
     {
         public RoleManager()
             : base(new RoleStore<IdentityRole>(new ApplicationDbContext()))
         {
         }
-
         public void AddDefaultRoles()
         {
             foreach (string roleName in SecurityRoles.DefaultSecurityRoles)
@@ -85,6 +83,7 @@ namespace ChinookSystem.BLL.Security
 
         }
         #endregion
+
 
     }
 }
