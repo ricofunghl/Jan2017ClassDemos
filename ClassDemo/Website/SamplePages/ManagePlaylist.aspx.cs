@@ -18,4 +18,16 @@ public partial class SamplePages_ManagePlaylist : System.Web.UI.Page
     }
 
 
+
+
+    protected void FetchArtist_Click(object sender, EventArgs e)
+    {
+        MessageUserControl.TryRun(() =>
+        {
+            TracksBy.Text = "Artist";
+            SearchArgID.Text = ArtistDDL.SelectedValue;
+            TrackSelectionList.DataBind();//will force the ODS to execute
+        });
+
+    }
 }
