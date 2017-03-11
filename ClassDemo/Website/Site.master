@@ -107,7 +107,7 @@
                                      NavigateUrl="~/Admin/Security/UserRoleAdmin.aspx">
                                 </asp:MenuItem>
                                  <asp:MenuItem Text="Manage PlayList"
-                                     NavigateUrl="~/SamplePages/ManagePlayList.aspx">
+                                     NavigateUrl="~/SamplePages/ManagePlaylist.aspx">
                                 </asp:MenuItem>
                             </asp:MenuItem>
 

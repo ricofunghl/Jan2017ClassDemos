@@ -73,7 +73,6 @@ namespace ChinookSystem.BLL
                 return results.ToList();
             }
         }//eom
-
         [DataObjectMethod(DataObjectMethodType.Select, false)]
         public List<SelectionList> List_AlbumTitles()
         {
@@ -90,7 +89,6 @@ namespace ChinookSystem.BLL
             }
         }
 
-       
         #region CRUD
 
         [DataObjectMethod(DataObjectMethodType.Select, false)]

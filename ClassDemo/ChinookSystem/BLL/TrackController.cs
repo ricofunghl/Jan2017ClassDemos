@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 #region Additional Namespaces
 using Chinook.Data.Enitities;
+using Chinook.Data.DTOs;
 using Chinook.Data.POCOs;
 using ChinookSystem.DAL;
 using System.ComponentModel;
@@ -16,8 +17,8 @@ namespace ChinookSystem.BLL
     [DataObject]
     public class TrackController
     {
-        [DataObjectMethod(DataObjectMethodType.Select, false)]
-        public List<TrackList> TracksForPlaylistSelection(string tracksby, int argid)
+        [DataObjectMethod(DataObjectMethodType.Select,false)]
+        public List<TrackList> List_TracksForPlaylistSelection(string tracksby, int argid)
         {
             using (var context = new ChinookContext())
             {
@@ -40,9 +41,8 @@ namespace ChinookSystem.BLL
                                           Milliseconds = x.Milliseconds,
                                           Bytes = x.Bytes,
                                           UnitPrice = x.UnitPrice
-
                                       }).ToList();
-                            break;
+                        break;
                         }
                     case "MediaType":
                         {
@@ -52,16 +52,14 @@ namespace ChinookSystem.BLL
                         {
                             break;
                         }
-                    /*case "Album"*/
                     default:
                         {
                             break;
                         }
-                        
-                }
-             return results;   
+                }//eos
+                return results;
             }
-            
         }
+
     }
 }
